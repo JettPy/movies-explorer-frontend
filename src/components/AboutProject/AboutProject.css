@@ -2,9 +2,10 @@
   padding: 110px 70px 0;
 }
 
-.about-project__title {
+.section-title {
   margin: 0;
   padding-bottom: 23px;
+  width: 100%;
   font-weight: normal;
   font-size: 22px;
   line-height: 27px;
@@ -100,7 +101,7 @@
     padding: 70px 18px 0;
   }
 
-  .about-project__title {
+  .section-title {
     padding-bottom: 28px;
     font-size: 18px;
     line-height: 22px;
