@@ -13,8 +13,14 @@ function Header({loggedIn}) {
           <Navigation />
       ) : (
           <nav>
-            <Link to="/signup" className="header__link">Регистрация</Link>
-            <Link to="/signin" className="header__link header__link_highlight">Войти</Link>
+            <ul className="header__list">
+              <li className="header__element">
+                <Link to="/signup" className="header__link">Регистрация</Link>
+              </li>
+              <li className="header__element">
+                <Link to="/signin" className="header__link header__link_highlight">Войти</Link>
+              </li>
+            </ul>
           </nav>
       )}
     </header>
