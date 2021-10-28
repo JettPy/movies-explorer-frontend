@@ -1,17 +1,13 @@
 import Header from '../Header/Header';
-import Promo from '../Promo/Promo';
+import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
-import AboutProject from '../AboutProject/AboutProject';
-import Techs from '../Techs/Techs';
 import './App.css';
 
 function App() {
   return (
     <>
       <Header loggedIn={false} />
-      <Promo />
-      <AboutProject />
-      <Techs />
+      <Main />
       <Footer />
     </>
   );
