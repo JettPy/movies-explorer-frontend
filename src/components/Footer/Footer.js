@@ -6,15 +6,15 @@ function Footer() {
       <p className="footer__collaboration">Учебный проект Яндекс.Практикум х BeatFilm.</p>
       <div className="footer__etc">
         <nav>
-          <ul className="footer__list">
+          <ul className="footer__list list">
             <li className="footer__element">
-              <a href="https://practicum.yandex.ru/" target="_blank" className="footer__link" rel="noreferrer">Яндекс.Практикум</a>
+              <a href="https://practicum.yandex.ru/" target="_blank" className="footer__link link" rel="noreferrer">Яндекс.Практикум</a>
             </li>
             <li className="footer__element">
-              <a href="https://github.com/JettPy" target="_blank" className="footer__link" rel="noreferrer">Github</a>
+              <a href="https://github.com/JettPy" target="_blank" className="footer__link link" rel="noreferrer">Github</a>
             </li>
             <li className="footer__element">
-              <a href="https://www.facebook.com/" target="_blank" className="footer__link" rel="noreferrer">Facebook</a>
+              <a href="https://www.facebook.com/" target="_blank" className="footer__link link" rel="noreferrer">Facebook</a>
             </li>
           </ul>
         </nav>

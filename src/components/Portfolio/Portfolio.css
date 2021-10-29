@@ -1,20 +1,14 @@
 .portfolio {
-  padding: 100px 70px 0;
+  padding: 100px 70px 125px;
 }
 
 .portfolio__title {
-  margin: 0;
+  margin: 0 0 50px;
   font-weight: normal;
   font-size: 18px;
   line-height: 20px;
   mix-blend-mode: normal;
   color: #A0A0A0;
-}
-
-.portfolio__list {
-  margin: 50px 0 125px;
-  padding: 0;
-  list-style: none;
 }
 
 .portfolio__element {
@@ -52,11 +46,7 @@
 @media screen and (max-width: 800px) {
 
   .portfolio {
-    padding: 90px 50px 0;
-  }
-
-  .portfolio__list {
-    margin-bottom: 90px;
+    padding: 90px 50px 90px;
   }
 
   .portfolio__discription {
@@ -81,16 +71,13 @@
 @media screen and (max-width: 390px) {
 
   .portfolio {
-    padding: 70px 14px 0;
+    padding: 70px 14px;
   }
 
   .portfolio__title {
+    margin-bottom: 40px;
     font-size: 14px;
     line-height: 20px;
-  }
-
-  .portfolio__list {
-    margin: 40px 0 70px;
   }
 
 }

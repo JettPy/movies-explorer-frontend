@@ -25,10 +25,7 @@
 }
 
 .footer__list {
-  margin: 0;
-  padding: 0;
   display: flex;
-  list-style: none;
 }
 
 .footer__copyright {
@@ -48,11 +45,9 @@
 }
 
 .footer__link {
-  text-decoration: none;
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
-  color: #000;
 }
 
 @media screen and (max-width: 800px) {
@@ -90,7 +85,6 @@
 
   .footer__list {
     margin-top: 30px;
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;

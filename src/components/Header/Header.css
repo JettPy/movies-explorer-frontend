@@ -12,10 +12,7 @@
 }
 
 .header__list {
-  margin: 0;
-  padding: 0;
   display: flex;
-  list-style: none;
 }
 
 .header__element {
@@ -27,11 +24,9 @@
 }
 
 .header__link {
-  text-decoration: none;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
-  color: #000;
 }
 
 .header__link_logo {

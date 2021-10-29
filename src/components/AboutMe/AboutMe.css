@@ -35,10 +35,8 @@
 }
 
 .about-me__list {
-  margin: 99px 0 0;
-  padding: 0;
+  margin-top: 99px;
   display: flex;
-  list-style: none;
 }
 
 .about-me__element {
@@ -50,12 +48,10 @@
 }
 
 .about-me__link {
-  text-decoration: none;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: #000;
 }
 
 .about-me__student {

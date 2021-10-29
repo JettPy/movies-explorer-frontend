@@ -6,19 +6,19 @@ import './Header.css';
 function Header({loggedIn}) {
   return (
     <header className="header">
-      <Link to="/" className="header__link header__link_logo">
+      <Link to="/" className="header__link header__link_logo link">
         <img src={logo} alt="Логотип" className="header__logo" />
       </Link>
       {loggedIn ? (
           <Navigation />
       ) : (
           <nav>
-            <ul className="header__list">
+            <ul className="header__list list">
               <li className="header__element">
-                <Link to="/signup" className="header__link">Регистрация</Link>
+                <Link to="/signup" className="header__link link">Регистрация</Link>
               </li>
               <li className="header__element">
-                <Link to="/signin" className="header__link header__link_highlight">Войти</Link>
+                <Link to="/signin" className="header__link header__link_highlight link">Войти</Link>
               </li>
             </ul>
           </nav>

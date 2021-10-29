@@ -4,12 +4,9 @@
 }
 
 .navigation__list {
-  margin: 0;
-  padding: 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  list-style: none;
 }
 
 .navigation__element {
@@ -23,11 +20,9 @@
 }
 
 .navigation__link {
-  text-decoration: none;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
-  color: #000;
 }
 
 @media screen and (max-width: 390px) {
