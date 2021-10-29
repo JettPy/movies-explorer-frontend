@@ -1,9 +1,9 @@
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import './Movies.css';
+import './SavedMovies.css';
 
-function Movies({ movies }) {
+function SavedMovies({ movies }) {
 
   return (
     <main>
@@ -11,10 +11,10 @@ function Movies({ movies }) {
       {false ? (
         <Preloader />
       ) : (
-        <MoviesCardList movies={movies}/>
+        <MoviesCardList movies={movies} />
       )}
     </main>
   );
 }
 
-export default Movies;
+export default SavedMovies;
