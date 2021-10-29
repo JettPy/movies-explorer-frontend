@@ -39,7 +39,7 @@
   border-radius: 4px;
 }
 
-.navigation__menu {
+.navigation__button {
   display: none;
 }
 
@@ -57,7 +57,7 @@
     display: none;
   }
 
-  .navigation__menu {
+  .navigation__button {
     padding: 0;
     width: 44px;
     height: 44px;

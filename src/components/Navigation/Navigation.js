@@ -23,7 +23,7 @@ function Navigation() {
         Аккаунт
         <img src={avatar} alt="Аватар" className="navigation__avatar" />
       </Link>
-      <button className="navigation__menu" onClick={onOpenMenu}>
+      <button className="navigation__button button" onClick={onOpenMenu}>
         <img src={menuIcon} alt="Меню" className="navigation__menu-icon" />
       </button>
     </nav>

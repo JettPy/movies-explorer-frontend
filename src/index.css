@@ -11,3 +11,12 @@
   text-decoration: none;
   color: #000;
 }
+
+.button {
+  padding: 0;
+  border: none;
+  background-color: #FFF;
+  box-sizing: border-box;
+  outline: none;
+  cursor: pointer;
+}
