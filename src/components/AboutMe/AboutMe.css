@@ -55,7 +55,10 @@
 }
 
 .about-me__student {
+  width: 270px;
   height: 327px;
+  object-fit: cover;
+  object-position: center top;
 }
 
 @media screen and (max-width: 800px) {
@@ -91,6 +94,7 @@
   }
 
   .about-me__student {
+    width: 255px;
     height: 307px;
   }
 
@@ -118,8 +122,8 @@
   }
 
   .about-me__student {
-    width: 325px;
-    height: auto;
+    width: 292px;
+    height: 352px;
     justify-self: center;
     order: -1;
   }
@@ -154,10 +158,6 @@
     margin-top: 20px;
     font-size: 11px;
     line-height: 16px;
-  }
-
-  .about-me__student {
-    width: 100%;
   }
 
 }
