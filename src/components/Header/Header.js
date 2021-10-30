@@ -6,7 +6,7 @@ import './Header.css';
 function Header({loggedIn}) {
   return (
     <header className="header">
-      <Link to="/" className="header__link header__link_logo link">
+      <Link to="/" className="link__logo link">
         <img src={logo} alt="Логотип" className="header__logo" />
       </Link>
       {loggedIn ? (

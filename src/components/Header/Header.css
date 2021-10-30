@@ -29,12 +29,6 @@
   line-height: 16px;
 }
 
-.header__link_logo {
-  margin-right: 0;
-  width: 38px;
-  height: 38px;
-}
-
 .header__link_highlight {
   padding: 8px 20px;
   background-color: #2BE080;
