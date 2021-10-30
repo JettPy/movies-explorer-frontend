@@ -11,7 +11,7 @@ function SavedMovies({ movies }) {
       {false ? (
         <Preloader />
       ) : (
-        <MoviesCardList movies={movies} />
+          <MoviesCardList movies={movies} isSaved={true} />
       )}
     </main>
   );

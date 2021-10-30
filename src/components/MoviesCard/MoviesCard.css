@@ -12,8 +12,13 @@
   border-radius: 6px 6px 0 0;
 }
 
+.movie-card__container {
+  width: 100%;
+  height: 78px;
+}
+
 .movie-card__group {
-  margin: 16px 24px 0 16px;
+  padding: 16px 24px 0 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,6 +29,19 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
+}
+
+.movie-card__delete {
+  width: 14px;
+  height: 12px;
+  background-image: url(../../images/delite.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+}
+
+.movie-card__container:hover .movie-card__delete {
+  opacity: 1;
 }
 
 .movie-card__like {
@@ -56,8 +74,12 @@
     height: 190px;
   }
 
+  .movie-card__container {
+    height: 72px;
+  }
+
   .movie-card__group {
-    margin: 14px 22px 0 14px;
+    padding: 14px 22px 0 14px;
   }
 
   .movie-card__duration {
@@ -76,8 +98,12 @@
     height: 168px;
   }
 
+  .movie-card__container {
+    height: 69px;
+  }
+
   .movie-card__group {
-    margin-right: 18px;
+    padding-right: 18px;
   }
 
   .movie-card__title {
