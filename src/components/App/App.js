@@ -1,20 +1,32 @@
 
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import './App.css';
 
 import { movies, savedMovies } from '../../utils/data.js'
 
-
-
 function App() {
+
+  const [currentUser, setCurrentUser] = React.useState({});
+
+  React.useEffect(() => {
+    const user = {
+      name: 'Сергей',
+      email: 'test@user.com',
+    }
+    setCurrentUser(user);
+  }, []);
+
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
       <Switch>
         <Route exact path="/">
           <Header loggedIn={false} />
@@ -31,11 +43,15 @@ function App() {
           <SavedMovies movies={savedMovies} />
           <Footer />
         </Route>
+        <Route path="/profile">
+          <Header loggedIn={true} />
+          <Profile />
+        </Route>
         <Route path="*">
           <PageNotFound />
         </Route>
       </Switch>
-    </>
+    </CurrentUserContext.Provider>
   );
 }
 
