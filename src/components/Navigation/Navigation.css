@@ -1,5 +1,8 @@
 .navigation {
   width: calc(50% + 105px);
+}
+
+.navigation__bar {
   display: flex;
   justify-content: space-between;
 }
@@ -43,34 +46,128 @@
   display: none;
 }
 
+.navigation__menu {
+    display: none;
+}
+
 @media screen and (max-width: 800px) {
 
   .navigation {
     width: auto;
   }
 
-  .navigation__list {
-    display: none;
-  }
-
-  .navigation__profile {
+  .navigation__bar {
     display: none;
   }
 
   .navigation__button {
-    padding: 0;
     width: 44px;
     height: 44px;
     display: block;
-    border: none;
-    background-color: #FFF;
-    box-sizing: border-box;
-    outline: none;
-    cursor: pointer;
+    background-image: url(../../images/menu.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .navigation__button_disable {
+    display: none;
   }
 
   .navigation__menu-icon {
     width: 100%;
   }
 
+  .navigation__overlay {
+    display: flex;
+    flex-direction: row-reverse;
+    position: fixed;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    z-index: 1;
+  }
+
+  .navigation__menu_opened {
+    visibility: visible;
+  }
+
+  .navigation__menu {
+    height: 100vh;
+    max-width: 520px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFF;
+  }
+
+  .navigation__menu-list {
+    margin-top: 159px;
+  }
+
+  .navigation__menu-element {
+    margin-bottom: 22px;
+    text-align: center;
+  }
+
+  .navigation__menu-element:last-child {
+    margin-bottom: 0;
+  }
+
+  .navigation__link {
+    padding-bottom: 4px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .navigation__profile {
+    position: absolute;
+    bottom: 99px;
+  }
+
+  .navigation__close {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 22.4px;
+    top: 22.4px;
+    background-image: url(../../images/close.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+}
+
+@media screen and (max-width: 390px) {
+
+  .navigation__menu-list {
+    margin-top: 144px;
+  }
+
+  .navigation__menu-element {
+    margin-bottom: 15px;
+  }
+
+  .navigation__link {
+    padding-bottom: 7px;
+  }
+
+  .navigation__profile {
+    bottom: 48px;
+  }
+
+  .navigation__close {
+    right: 13.4px;
+    top: 13.4px;
+  }
+
+}
+
+.able {
+  display: flex;
 }
