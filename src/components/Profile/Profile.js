@@ -38,6 +38,7 @@ function Profile() {
               className="profile__input"
               type="text"
               name="name"
+              placeholder="Иван"
               id="name-input"
               value={name || ''}
               onChange={handleInputName}
@@ -49,6 +50,7 @@ function Profile() {
               className="profile__input"
               type="email"
               name="email"
+              placeholder="email@example.ru"
               id="email-input"
               value={email || ''}
               onChange={handleInputEmail}

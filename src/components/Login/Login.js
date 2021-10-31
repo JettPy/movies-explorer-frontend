@@ -30,6 +30,7 @@ function Login() {
             className="auth__input"
             type="email"
             name="email"
+            placeholder="email@example.ru"
             id="email-input"
             onChange={handleInputEmail}
           />

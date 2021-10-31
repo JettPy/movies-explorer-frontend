@@ -31,9 +31,9 @@ function Navigation() {
           <img src={avatar} alt="Аватар" className="navigation__avatar" />
         </Link>
       </div>
-      <button className={`navigation__button button ${isMenuOpen && "navigation__button_disable"}`} onClick={onOpenMenu}></button>
-      <div className={`navigation__overlay ${isMenuOpen && "navigation__menu_opened"}`}>
-        <div className="navigation__menu">
+      <button className="navigation__button button" onClick={onOpenMenu}></button>
+      <div className={`navigation__overlay ${isMenuOpen && "navigation__overlay_opened"}`}>
+        <div className={`navigation__menu ${isMenuOpen && "navigation__menu_opened"}`}>
           <ul className="navigation__menu-list list">
             <li className="navigation__menu-element">
               <Link to="/" className="navigation__link link" onClick={onClose}>Главная</Link>

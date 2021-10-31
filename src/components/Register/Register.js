@@ -34,6 +34,7 @@ function Register() {
             className="auth__input"
             type="text"
             name="name"
+            placeholder="Иван"
             id="name-input"
             onChange={handleInputName}
           />
@@ -42,6 +43,7 @@ function Register() {
             className="auth__input"
             type="email"
             name="email"
+            placeholder="email@example.ru"
             id="email-input"
             onChange={handleInputEmail}
           />

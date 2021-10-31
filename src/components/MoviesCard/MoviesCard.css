@@ -38,6 +38,7 @@
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
+  transition: opacity 0.3s linear;
 }
 
 .movie-card__container:hover .movie-card__delete {
