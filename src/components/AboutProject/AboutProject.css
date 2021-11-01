@@ -1,0 +1,129 @@
+.about-project {
+  padding: 110px 70px;
+}
+
+.about-project__description {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(2, min-content);
+  gap: 26px 40px;
+  grid-auto-flow: column;
+}
+
+.about-project__description-tile {
+  margin: 0;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+}
+
+.about-project__information {
+  margin: 0;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.about-project__chart {
+  margin-top: 110px;
+  display: grid;
+  grid-template-columns: minmax(75px, 1fr) 4fr;
+  grid-template-rows: 36px min-content;
+  row-gap: 14px;
+  grid-auto-flow: column;
+}
+
+.about-project__chart-title {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F2F2F2;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.about-project__chart-title_highlight {
+  background-color: #2BE080;
+}
+
+.about-project__label {
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #A0A0A0;
+}
+
+@media screen and (max-width: 800px) {
+
+  .about-project {
+    padding: 90px 50px;
+  }
+
+  .about-project__description {
+    gap: 22px 30px;
+  }
+
+  .about-project__information {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__chart {
+    margin-top: 93px;
+  }
+
+  .about-project__label {
+    font-weight: normal;
+  }
+
+}
+
+@media screen and (max-width: 390px) {
+
+  .about-project {
+    padding: 70px 18px;
+  }
+
+  .about-project__description {
+    margin-top: 60px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, min-content);
+    row-gap: 16px;
+    grid-auto-flow: column;
+  }
+
+  .about-project__description-tile {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about-project__information {
+    padding-bottom: 40px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about-project__chart {
+    margin-top: 20px;
+    grid-template-columns: 25fr 46fr;
+    grid-template-rows: 35px min-content;
+    row-gap: 10px;
+  }
+
+  .about-project__chart-title {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about-project__label {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+}

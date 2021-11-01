@@ -1,0 +1,121 @@
+.movie-card {
+  height: 281px;
+  background: #FDFDFD;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+}
+
+.movie-card__image {
+  width: 100%;
+  height: 203px;
+  object-fit: cover;
+  border-radius: 6px 6px 0 0;
+}
+
+.movie-card__container {
+  width: 100%;
+  height: 78px;
+}
+
+.movie-card__group {
+  padding: 16px 24px 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movie-card__title {
+  margin: 0;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.movie-card__delete {
+  width: 14px;
+  height: 12px;
+  background-image: url(../../images/delite.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+
+.movie-card__container:hover .movie-card__delete {
+  opacity: 1;
+}
+
+.movie-card__like {
+  width: 14px;
+  height: 12px;
+  background-image: url(../../images/like.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.movie-card__like_active {
+  background-image: url(../../images/like-active.svg);
+}
+
+.movie-card__duration {
+  margin: 17px 0 0 16px;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  color: #A0A0A0;
+}
+
+@media screen and (max-width: 950px) {
+
+  .movie-card {
+    height: 262px;
+  }
+
+  .movie-card__image {
+    height: 190px;
+  }
+
+  .movie-card__container {
+    height: 72px;
+  }
+
+  .movie-card__group {
+    padding: 14px 22px 0 14px;
+  }
+
+  .movie-card__duration {
+    margin: 15px 0 0 14px;
+  }
+
+}
+
+@media screen and (max-width: 390px) {
+
+  .movie-card {
+    height: 237px;
+  }
+
+  .movie-card__image {
+    height: 168px;
+  }
+
+  .movie-card__container {
+    height: 69px;
+  }
+
+  .movie-card__group {
+    padding-right: 18px;
+  }
+
+  .movie-card__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .movie-card__duration {
+    margin: 14px 0 0 14px;
+    font-size: 10px;
+    line-height: 12px;
+  }
+
+}
