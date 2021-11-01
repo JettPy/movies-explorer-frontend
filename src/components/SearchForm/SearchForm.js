@@ -1,6 +1,5 @@
 import React from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
-import searchIcon from '../../images/search.svg'
 import './SearchForm.css';
 
 function SearchForm() {
@@ -32,10 +31,9 @@ function SearchForm() {
             placeholder="Фильм"
             id="movie-input"
             onChange={handleInputMovie}
+            required
           />
-          <button className="search__button button" type="submit">
-            <img src={searchIcon} alt="Поиск" className="search__icon" />
-          </button>
+          <button className="search__button button" type="submit"></button>
         </fieldset>
       </form>
       <FilterCheckbox />
