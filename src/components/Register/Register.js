@@ -3,7 +3,7 @@ import logo from '../../images/logo.svg';
 import { Link } from "react-router-dom";
 import './Register.css';
 
-function Register() {
+function Register({ onRegister }) {
 
   const [name, setName] = React.useState('');
   const [isNameValid, setIsNameValid] = React.useState(false);
@@ -38,9 +38,9 @@ function Register() {
     setPasswordValidationMessage(event.target.validationMessage);
   }
 
-  const submit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Отправлено!');
+    onRegister(name, email, password);
   };
 
   return (
@@ -49,7 +49,7 @@ function Register() {
         <img src={logo} alt="Логотип" className="auth__logo" />
       </Link>
       <h1 className="auth__title">Добро пожаловать!</h1>
-      <form className="auth__form" name="login" onSubmit={submit}>
+      <form className="auth__form" name="login" onSubmit={handleSubmit}>
         <fieldset className="auth__set">
           <label className="auth__label" htmlFor="name-input">Имя</label>
           <input

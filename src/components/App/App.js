@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -17,7 +18,10 @@ import { movies, savedMovies } from '../../utils/data.js'
 
 function App() {
 
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [registerd, setRegisterd] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+  const history = useHistory();
 
   React.useEffect(() => {
     const user = {
@@ -27,34 +31,49 @@ function App() {
     setCurrentUser(user);
   }, []);
 
+  const handleRegistration = (email, password) => {
+    setRegisterd(true);
+    history.push('/signin');
+  }
+
+  const handleLogin = (name, email, password) => {
+    setLoggedIn(true);
+    history.push('/');
+  }
+
+  const handleSignOut = () => {
+    setLoggedIn(false);
+    history.push('/');
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
         <Route exact path="/">
-          <Header loggedIn={false} />
+          <Header loggedIn={loggedIn} />
           <Main />
           <Footer />
         </Route>
         <Route path="/signup">
-          <Register />
+          <Register onRegister={handleRegistration} />
         </Route>
         <Route path="/signin">
-          <Login />
+          <Login onLogin={handleLogin} />
         </Route>
-        <Route path="/movies">
-          <Header loggedIn={true} />
-          <Movies movies={movies}/>
+        <ProtectedRoute loggedIn={loggedIn} path="/movies">
+          <Header loggedIn={loggedIn} />
+          <Movies movies={movies} />
           <Footer />
-        </Route>
-        <Route path="/saved-movies">
-          <Header loggedIn={true} />
+        </ProtectedRoute>
+        <ProtectedRoute loggedIn={loggedIn} path="/saved-movies">
+          <Header loggedIn={loggedIn} />
           <SavedMovies movies={savedMovies} />
           <Footer />
-        </Route>
-        <Route path="/profile">
-          <Header loggedIn={true} />
-          <Profile />
-        </Route>
+        </ProtectedRoute>
+        <ProtectedRoute loggedIn={loggedIn} path="/profile">
+          <Header loggedIn={loggedIn} />
+          <Profile onSignOut={handleSignOut} />
+        </ProtectedRoute>
         <Route path="*">
           <PageNotFound />
         </Route>

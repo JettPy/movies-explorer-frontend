@@ -2,7 +2,7 @@ import React from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import './Profile.css';
 
-function Profile() {
+function Profile({ onSignOut }) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -35,7 +35,7 @@ function Profile() {
     setEmailValidationMessage(event.target.validationMessage);
   }
 
-  const submit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     console.log('Отправлено!');
   };
@@ -43,7 +43,7 @@ function Profile() {
   return (
     <main className="profile">
       <h1 className="profile__title">{'Привет, ' + currentUser.name + '!'}</h1>
-      <form className="profile__form" name="profile" onSubmit={submit}>
+      <form className="profile__form" name="profile" onSubmit={handleSubmit}>
         <fieldset className="profile__set">
           <label className="profile__label">
             Имя
@@ -75,7 +75,7 @@ function Profile() {
           <button className="profile__button button" type="submit" disabled={!isFormValid}>Редактировать</button>
         </fieldset>
       </form>
-      <button className="profile__exit button" type="button">Выйти из аккаунта</button>
+      <button className="profile__exit button" type="button" onClick={onSignOut}>Выйти из аккаунта</button>
     </main>
   );
 }
