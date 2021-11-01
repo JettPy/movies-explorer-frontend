@@ -32,8 +32,8 @@ function Navigation() {
         </Link>
       </div>
       <button className="navigation__button button" onClick={onOpenMenu}></button>
-      <div className={`navigation__overlay ${isMenuOpen && "navigation__overlay_opened"}`}>
-        <div className={`navigation__menu ${isMenuOpen && "navigation__menu_opened"}`}>
+      <div className={`navigation__overlay${isMenuOpen ? ' navigation__overlay_opened' : ''}`}>
+        <div className={`navigation__menu${isMenuOpen ? ' navigation__menu_opened' : ''}`}>
           <ul className="navigation__menu-list list">
             <li className="navigation__menu-element">
               <Link to="/" className="navigation__link link" onClick={onClose}>Главная</Link>

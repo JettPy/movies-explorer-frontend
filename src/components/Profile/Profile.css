@@ -42,7 +42,6 @@
 
 .profile__label:last-of-type {
   margin-bottom: 0;
-  padding-bottom: 0;
   border: none;
 }
 
@@ -55,6 +54,11 @@
   line-height: 13px;
   text-align: right;
   outline: none;
+}
+
+.profile__input:focus {
+  background: #EEE;
+  color: #000;
 }
 
 .profile__button {

@@ -22,6 +22,10 @@
   color: #A0A0A0;
 }
 
+.search__input:focus {
+  background: #EEE;
+}
+
 .search__button {
   width: 34px;
   height: 34px;

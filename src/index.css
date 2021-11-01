@@ -28,6 +28,23 @@
   display: block;
 }
 
+.error__input {
+  color: #EE3465;
+}
+
+.error__span {
+  margin-bottom: 10px;
+  width: 100%;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+}
+
+.error__span:last-of-type {
+  margin-bottom: 0;
+}
+
 .auth {
   margin: 0 auto;
   padding-top: 70px;
@@ -86,6 +103,11 @@
   border-radius: 8px;
 }
 
+.auth__input:focus {
+  background: #EEE;
+  color: #000;
+}
+
 .auth__input:last-of-type {
   margin-bottom: 0;
 }
@@ -100,6 +122,10 @@
   font-size: 14px;
   line-height: 17px;
   color: #FFF;
+}
+
+.error_button {
+  background-color: #CCC;
 }
 
 .auth__button_register {

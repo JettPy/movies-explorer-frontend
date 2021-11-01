@@ -22,7 +22,7 @@ function MoviesCard({ movie, isSaved }) {
           {isSaved ? (
             <button className="movie-card__delete button" aria-label="Удалить" type="button" onClick={handleDeleteClick}></button>
           ) : (
-            <button className={`movie-card__like button ${isLiked && "movie-card__like_active"}`} aria-label="Лайк" type="button" onClick={handleLikeClick}></button>
+              <button className={`movie-card__like button${isLiked ? ' movie-card__like_active' : ''}`} aria-label="Лайк" type="button" onClick={handleLikeClick}></button>
           )}
         </div>
         <p className="movie-card__duration">{Math.floor(movie.duration / 60) + 'ч ' + movie.duration % 60 + 'м'}</p>

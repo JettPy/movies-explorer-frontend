@@ -8,8 +8,8 @@ function FilterCheckbox() {
 
   return (
     <div className="filter-checkbox">
-      <label className="filter-checkbox__label" htmlFor="shortfilms">
-        <input className="filter-checkbox__input" type="checkbox" name="short-films" id="shortfilms" onChange={handleInputCheckbox}/>
+      <label className="filter-checkbox__label">
+        <input className="filter-checkbox__input" type="checkbox" name="short-films" onChange={handleInputCheckbox}/>
         <span className="filter-checkbox__pseudo-checkbox"></span>
       </label>
       <label className="filter-checkbox__caption" htmlFor="shortfilms">Короткометражки</label>
