@@ -11,6 +11,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
+import Popup from '../Popup/Popup';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import './App.css';
 
@@ -19,7 +20,9 @@ import { movies, savedMovies } from '../../utils/data.js'
 function App() {
 
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [registerd, setRegisterd] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
   const [currentUser, setCurrentUser] = React.useState({});
   const history = useHistory();
 
@@ -31,8 +34,13 @@ function App() {
     setCurrentUser(user);
   }, []);
 
+  const handleClickBack = () => {
+    history.goBack();
+  }
+
   const handleRegistration = (email, password) => {
-    setRegisterd(true);
+    setIsSuccess(true);
+    setIsPopupOpen(true);
     history.push('/signin');
   }
 
@@ -44,6 +52,10 @@ function App() {
   const handleSignOut = () => {
     setLoggedIn(false);
     history.push('/');
+  }
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
   }
 
   return (
@@ -75,9 +87,10 @@ function App() {
           <Profile onSignOut={handleSignOut} />
         </ProtectedRoute>
         <Route path="*">
-          <PageNotFound />
+          <PageNotFound goBack={handleClickBack} />
         </Route>
       </Switch>
+      <Popup isPopupOpen={isPopupOpen} onClose={closePopup} isSuccess={isSuccess} message={message} />
     </CurrentUserContext.Provider>
   );
 }

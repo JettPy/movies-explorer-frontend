@@ -6,16 +6,18 @@ import './Login.css';
 function Login({ onLogin }) {
 
   const [email, setEmail] = React.useState('');
-  const [isEmailValid, setIsEmailValid] = React.useState(false);
+  const [isEmailValid, setIsEmailValid] = React.useState(true);
   const [emailValidationMessage, setEmailValidationMessage] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [isPasswordValid, setIsPasswordValid] = React.useState(false);
+  const [isPasswordValid, setIsPasswordValid] = React.useState(true);
   const [passwordValidationMessage, setPasswordValidationMessage] = React.useState('');
   const [isFormValid, setIsFormValid] = React.useState(false);
 
   React.useEffect(() => {
-    setIsFormValid(isEmailValid && isPasswordValid);
-  }, [isEmailValid, isPasswordValid]);
+    setIsFormValid(isEmailValid && isPasswordValid &&
+      email.length > 0 && password.length > 0);
+  }, [isEmailValid, isPasswordValid, email.length, password.length]);
+
 
   const handleInputEmail = (event) => {
     setEmail(event.target.value);
