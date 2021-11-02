@@ -2,7 +2,7 @@ import React from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import './Profile.css';
 
-function Profile({ onSignOut }) {
+function Profile({ onUpdateUser, onSignOut }) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -37,7 +37,7 @@ function Profile({ onSignOut }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Отправлено!');
+    onUpdateUser(name, email);
   };
 
   return (

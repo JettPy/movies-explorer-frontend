@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -14,6 +14,7 @@ import Footer from '../Footer/Footer';
 import Popup from '../Popup/Popup';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import './App.css';
+import { mainApi } from '../../utils/MainApi'
 
 import { movies, savedMovies } from '../../utils/data.js'
 
@@ -25,38 +26,88 @@ function App() {
   const [message, setMessage] = React.useState('');
   const [currentUser, setCurrentUser] = React.useState({});
   const history = useHistory();
+  const location = useLocation();
 
   React.useEffect(() => {
-    const user = {
-      name: 'Сергей',
-      email: 'test@user.com',
-    }
-    setCurrentUser(user);
+    tokenCheck();
   }, []);
 
   const handleClickBack = () => {
     history.goBack();
   }
 
-  const handleRegistration = (email, password) => {
-    setIsSuccess(true);
-    setIsPopupOpen(true);
-    history.push('/signin');
+  const tokenCheck = () => {
+    mainApi.getUserInfo()
+      .then((result) => {
+        setCurrentUser(result);
+        setLoggedIn(true);
+        history.push(location);
+      })
+      .catch((error) => {
+        history.push('/');
+      });
+  };
+
+  const handleRegistration = (name, email, password) => {
+    mainApi.registration(name, email, password)
+      .then(() => {
+        setIsSuccess(true);
+        history.push('/signin');
+      })
+      .catch((error) => {
+        error.then((res) => setMessage(res.message));
+      })
+      .finally(() => {
+        setIsPopupOpen(true);
+      });
   }
 
-  const handleLogin = (name, email, password) => {
-    setLoggedIn(true);
-    history.push('/');
+  const handleLogin = (email, password) => {
+    mainApi.authorize(email, password)
+      .then((response) => {
+        setLoggedIn(true);
+        history.push('/movies');
+      })
+      .catch((error) => {
+        error.then((res) => setMessage(res.message));
+        setIsPopupOpen(true)
+      });
   }
 
   const handleSignOut = () => {
-    setLoggedIn(false);
-    history.push('/');
+    mainApi.logout()
+      .then((response) => {
+        setLoggedIn(false);
+        history.push('/');
+      })
+      .catch((error) => {
+        error.then((res) => setMessage(res.message));
+        setIsPopupOpen(true)
+      });
+
   }
 
   const closePopup = () => {
     setIsPopupOpen(false);
+    setTimeout(()=> {
+      setIsSuccess(false);
+      setMessage('');
+    }, 300);
   }
+
+  const handleUpdateUser = (name, email) => {
+    mainApi.updateUserInfo(name, email)
+      .then((result) => {
+        setCurrentUser(result);
+        setIsSuccess(true);
+      })
+      .catch((error) => {
+        error.then((res) => setMessage(res.message));
+      })
+      .finally(() => {
+        setIsPopupOpen(true);
+      });
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -84,7 +135,7 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute loggedIn={loggedIn} path="/profile">
           <Header loggedIn={loggedIn} />
-          <Profile onSignOut={handleSignOut} />
+          <Profile onUpdateUser={handleUpdateUser} onSignOut={handleSignOut} />
         </ProtectedRoute>
         <Route path="*">
           <PageNotFound goBack={handleClickBack} />
