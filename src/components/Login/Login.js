@@ -2,7 +2,7 @@ import React from "react";
 import logo from '../../images/logo.svg';
 import { Link } from "react-router-dom";
 
-function Login({ onLogin }) {
+function Login({ onLogin, isSending }) {
 
   const [email, setEmail] = React.useState('');
   const [isEmailValid, setIsEmailValid] = React.useState(true);
@@ -52,6 +52,7 @@ function Login({ onLogin }) {
             id="email-input"
             onChange={handleInputEmail}
             required
+            disabled={isSending}
           />
           <span className="error__span">{emailValidationMessage}</span>
           <label className="auth__label" htmlFor="password-input">Пароль</label>
@@ -63,9 +64,10 @@ function Login({ onLogin }) {
             onChange={handleInputPassword}
             minLength="8"
             required
+            disabled={isSending}
           />
           <span className="error__span">{passwordValidationMessage}</span>
-          <button className={`auth__button button${!isFormValid ? ' error_button' : ''}`} type="submit" disabled={!isFormValid}>Войти</button>
+          <button className={`auth__button button${!isFormValid ? ' error_button' : ''}`} type="submit" disabled={!isFormValid || isSending} >Войти</button>
         </fieldset>
       </form>
       <p className="auth__caption">

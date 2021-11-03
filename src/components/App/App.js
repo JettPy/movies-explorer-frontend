@@ -29,10 +29,13 @@ function App() {
   const [searchedMovies, setSearchedMovies] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [searchedSavedMovies, setSearchedSavedMovies] = React.useState([]);
+  const [isSearched, setIsSearched] = React.useState(false);
+  const [isSavedSearched, setIsSavedSearched] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isSearching, setIsSearching] = React.useState(false);
   const [moviesCount, setMoviesCount] = React.useState(0);
   const [addCount, setAddCount] = React.useState(0);
+  const [isSending, setIsSending] = React.useState(false);
   const history = useHistory();
   const location = useLocation();
 
@@ -72,6 +75,7 @@ function App() {
         error.then((res) => setMessage(ERROR_MOVIE_API));
         setIsPopupOpen(true)
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   React.useEffect(() => {
@@ -82,7 +86,6 @@ function App() {
   }, [moviesCount]);
 
   const handleClickBack = () => {
-    console.log(history.length);
     history.goBack();
   };
 
@@ -104,6 +107,7 @@ function App() {
   };
 
   const handleRegistration = (name, email, password) => {
+    setIsSending(true);
     mainApi.registration(name, email, password)
       .then((result) => {
         setIsSuccess(true);
@@ -116,10 +120,12 @@ function App() {
       })
       .finally(() => {
         setIsPopupOpen(true);
+        setIsSending(false);
       });
   };
 
   const handleLogin = (email, password) => {
+    setIsSending(false);
     mainApi.authorize(email, password)
       .then((result) => {
         history.push('/movies');
@@ -128,6 +134,9 @@ function App() {
       .catch((error) => {
         error.then((res) => setMessage(res.message));
         setIsPopupOpen(true)
+      })
+      .finally(() => {
+        setIsSending(false);
       });
   };
 
@@ -155,6 +164,7 @@ function App() {
   };
 
   const handleUpdateUser = (name, email) => {
+    setIsSending(true);
     mainApi.updateUserInfo(name, email)
       .then((result) => {
         setCurrentUser(result);
@@ -165,11 +175,18 @@ function App() {
       })
       .finally(() => {
         setIsPopupOpen(true);
+        setIsSending(false);
       });
   };
 
   const handleSearch = (search, isShort, isSaved) => {
+    setIsSending(true);
     setIsSearching(true);
+    if (isSaved) {
+      setIsSavedSearched(true);
+    } else {
+      setIsSearched(true);
+    }
     getNumberOfMovies();
     setTimeout(() => {
       let foundMovies = null;
@@ -199,10 +216,12 @@ function App() {
         setSearchedMovies(foundMovies);
       }
       setIsSearching(false);
+      setIsSending(false);
     }, 400);
   };
 
   const handleFilterMovies = (isShort, isSaved) => {
+    setIsSending(true);
     setIsSearching(true);
     setTimeout(() => {
       let foundMovies = null;
@@ -218,6 +237,7 @@ function App() {
         setSearchedMovies(foundMovies);
       }
       setIsSearching(false);
+      setIsSending(false);
     }, 400);
   };
 
@@ -274,10 +294,10 @@ function App() {
           <Footer />
         </Route>
         <Route path="/signup">
-          <Register onRegister={handleRegistration} />
+          <Register onRegister={handleRegistration} isSending={isSending} />
         </Route>
         <Route path="/signin">
-          <Login onLogin={handleLogin} />
+          <Login onLogin={handleLogin} isSending={isSending} />
         </Route>
         <ProtectedRoute loggedIn={loggedIn} path="/movies">
           <Header loggedIn={loggedIn} />
@@ -291,6 +311,8 @@ function App() {
             onLike={handleLikeClick}
             onDelete={handleDeleteClick}
             filterMovies={handleFilterMovies}
+            isSending={isSending}
+            isSearched={isSearched}
           />
           <Footer />
         </ProtectedRoute>
@@ -306,12 +328,14 @@ function App() {
             onLike={handleLikeClick}
             onDelete={handleDeleteClick}
             filterMovies={handleFilterMovies}
+            isSending={isSending}
+            isSearched={isSavedSearched}
           />
           <Footer />
         </ProtectedRoute>
         <ProtectedRoute loggedIn={loggedIn} path="/profile">
           <Header loggedIn={loggedIn} />
-          <Profile onUpdateUser={handleUpdateUser} onSignOut={handleSignOut} />
+          <Profile onUpdateUser={handleUpdateUser} onSignOut={handleSignOut} isSending={isSending} />
         </ProtectedRoute>
         <Route path="*">
           <PageNotFound goBack={handleClickBack} />

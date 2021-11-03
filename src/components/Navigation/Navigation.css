@@ -109,6 +109,10 @@
     line-height: 22px;
   }
 
+  .navigation__link_active {
+    border-bottom: 2px solid #000;
+  }
+
   .navigation__profile {
     position: absolute;
     bottom: 99px;

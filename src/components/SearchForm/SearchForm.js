@@ -2,15 +2,11 @@ import React from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
 
-function SearchForm({ onSearch, isSaved, filterMovies }) {
+function SearchForm({ onSearch, isSaved, filterMovies, isSending }) {
 
   const [movie, setMovie] = React.useState('');
   const [movieValidationMessage, setMovieValidationMessage] = React.useState('');
   const [isShort, setIsShort] = React.useState(false);
-
-  React.useEffect(() => {
-    setMovie('');
-  }, []);
 
   const handleInputMovie = (event) => {
     setMovie(event.target.value);
@@ -37,12 +33,13 @@ function SearchForm({ onSearch, isSaved, filterMovies }) {
             placeholder="Фильм"
             id="movie-input"
             onChange={handleInputMovie}
+            disabled={isSending}
           />
-          <button className="search__button button" type="submit"></button>
+          <button className="search__button button" type="submit" disabled={isSending} ></button>
         </fieldset>
         <span className="error__span">{movieValidationMessage}</span>
       </form>
-      <FilterCheckbox isShort={isShort} setIsShort={setIsShort} isSaved={isSaved} filterMovies={filterMovies} />
+      <FilterCheckbox isShort={isShort} setIsShort={setIsShort} isSaved={isSaved} filterMovies={filterMovies} isSending={isSending} />
     </section>
   );
 }

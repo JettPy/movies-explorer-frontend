@@ -2,7 +2,7 @@ import React from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import './Profile.css';
 
-function Profile({ onUpdateUser, onSignOut }) {
+function Profile({ onUpdateUser, onSignOut, isSending }) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -21,6 +21,7 @@ function Profile({ onUpdateUser, onSignOut }) {
 
   React.useEffect(() => {
     setIsFormValid(isNameValid && isEmailValid && (name !== currentUser.name || email !== currentUser.email));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isNameValid, isEmailValid, name, email]);
 
   const handleInputName = (event) => {
@@ -57,6 +58,7 @@ function Profile({ onUpdateUser, onSignOut }) {
               onChange={handleInputName}
               minLength="2"
               required
+              disabled={isSending}
             />
           </label>
           <span className="error__span">{nameValidationMessage}</span>
@@ -70,10 +72,11 @@ function Profile({ onUpdateUser, onSignOut }) {
               value={email || ''}
               onChange={handleInputEmail}
               required
+              disabled={isSending}
             />
           </label>
           <span className="error__span">{emailValidationMessage}</span>
-          <button className="profile__button button" type="submit" disabled={!isFormValid}>Редактировать</button>
+          <button className="profile__button button" type="submit" disabled={!isFormValid || isSending} >Редактировать</button>
         </fieldset>
       </form>
       <button className="profile__exit button" type="button" onClick={onSignOut}>Выйти из аккаунта</button>

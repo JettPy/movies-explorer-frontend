@@ -2,7 +2,7 @@ import React from "react";
 import logo from '../../images/logo.svg';
 import { Link } from "react-router-dom";
 
-function Register({ onRegister }) {
+function Register({ onRegister, isSending }) {
 
   const [name, setName] = React.useState('');
   const [isNameValid, setIsNameValid] = React.useState(true);
@@ -61,6 +61,7 @@ function Register({ onRegister }) {
             onChange={handleInputName}
             minLength="2"
             required
+            disabled={isSending}
           />
           <span className="error__span">{nameValidationMessage}</span>
           <label className="auth__label" htmlFor="email-input">E&#8209;mail</label>
@@ -72,6 +73,7 @@ function Register({ onRegister }) {
             id="email-input"
             onChange={handleInputEmail}
             required
+            disabled={isSending}
           />
           <span className="error__span">{emailValidationMessage}</span>
           <label className="auth__label" htmlFor="password-input">Пароль</label>
@@ -83,9 +85,10 @@ function Register({ onRegister }) {
             onChange={handleInputPassword}
             minLength="8"
             required
+            disabled={isSending}
           />
           <span className="error__span">{passwordValidationMessage}</span>
-          <button className={`auth__button auth__button_register button${!isFormValid ? ' error_button' : ''}`} type="submit" disabled={!isFormValid}>Зарегистрироваться</button>
+          <button className={`auth__button auth__button_register button${!isFormValid ? ' error_button' : ''}`} type="submit" disabled={!isFormValid || isSending} >Зарегистрироваться</button>
         </fieldset>
       </form>
       <p className="auth__caption">
