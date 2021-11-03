@@ -20,8 +20,8 @@ function Profile({ onUpdateUser, onSignOut }) {
   }, [currentUser]);
 
   React.useEffect(() => {
-    setIsFormValid(isNameValid && isEmailValid);
-  }, [isNameValid, isEmailValid]);
+    setIsFormValid(isNameValid && isEmailValid && (name !== currentUser.name || email !== currentUser.email));
+  }, [isNameValid, isEmailValid, name, email]);
 
   const handleInputName = (event) => {
     setName(event.target.value);
@@ -37,6 +37,7 @@ function Profile({ onUpdateUser, onSignOut }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsFormValid(false);
     onUpdateUser(name, email);
   };
 

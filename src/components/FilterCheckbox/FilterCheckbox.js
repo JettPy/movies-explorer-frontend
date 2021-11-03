@@ -1,9 +1,10 @@
 import './FilterCheckbox.css';
 
-function FilterCheckbox() {
+function FilterCheckbox({ isShort, setIsShort, isSaved, filterMovies }) {
 
   const handleInputCheckbox = (event) => {
-    console.log(event.target.value);
+    setIsShort(!isShort);
+    filterMovies(isShort, isSaved);
   }
 
   return (

@@ -1,7 +1,6 @@
 import React from "react";
 import logo from '../../images/logo.svg';
 import { Link } from "react-router-dom";
-import './Register.css';
 
 function Register({ onRegister }) {
 

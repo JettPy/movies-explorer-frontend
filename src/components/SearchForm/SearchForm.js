@@ -2,9 +2,11 @@ import React from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
 
-function SearchForm() {
+function SearchForm({ onSearch, isSaved, filterMovies }) {
 
   const [movie, setMovie] = React.useState('');
+  const [movieValidationMessage, setMovieValidationMessage] = React.useState('');
+  const [isShort, setIsShort] = React.useState(false);
 
   React.useEffect(() => {
     setMovie('');
@@ -12,17 +14,21 @@ function SearchForm() {
 
   const handleInputMovie = (event) => {
     setMovie(event.target.value);
-    console.log(movie);
+    setMovieValidationMessage(event.target.validationMessage);
   }
 
-  const submit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Отправлено!');
+    if (movie.length > 0) {
+      onSearch(movie, isShort, isSaved);
+    } else {
+      setMovieValidationMessage('Нужно ввести ключевое слово');
+    }
   };
 
   return (
     <section className="search">
-      <form name="movies" onSubmit={submit}>
+      <form name="movies" onSubmit={handleSubmit}>
         <fieldset className="search__set">
           <input
             className="search__input"
@@ -31,12 +37,12 @@ function SearchForm() {
             placeholder="Фильм"
             id="movie-input"
             onChange={handleInputMovie}
-            required
           />
           <button className="search__button button" type="submit"></button>
         </fieldset>
+        <span className="error__span">{movieValidationMessage}</span>
       </form>
-      <FilterCheckbox />
+      <FilterCheckbox isShort={isShort} setIsShort={setIsShort} isSaved={isSaved} filterMovies={filterMovies} />
     </section>
   );
 }

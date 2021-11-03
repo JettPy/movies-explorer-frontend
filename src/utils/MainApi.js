@@ -39,7 +39,7 @@ class MainApi {
       .then(this._checkResponse);
   }
 
-  saveMovie(country, director, duration, year, description, image, trailer, thumbnail, movieId, nameRU, nameEN) {
+  saveMovie({ country, director, duration, year, description, image, trailer, thumbnail, movieId, nameRU, nameEN }) {
     return fetch(this._url + '/movies', {
       method: "POST",
       body: JSON.stringify({
