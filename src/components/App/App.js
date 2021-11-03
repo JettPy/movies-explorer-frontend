@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -20,7 +20,7 @@ import { movieApi } from '../../utils/MoviesApi'
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
   const [message, setMessage] = React.useState('');
@@ -33,6 +33,7 @@ function App() {
   const [moviesCount, setMoviesCount] = React.useState(0);
   const [addCount, setAddCount] = React.useState(0);
   const history = useHistory();
+  const location = useLocation();
 
   const ERROR_MOVIE_API = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
 
@@ -61,21 +62,10 @@ function App() {
         error.then((res) => setMessage(ERROR_MOVIE_API));
         setIsPopupOpen(true)
       });
-    mainApi.getSavedMovies()
-      .then((result) => {
-        setSavedMovies(result);
-        localStorage.setItem('saved', JSON.stringify(result));
-      })
-      .catch((error) => {
-        error.then((res) => setMessage(ERROR_MOVIE_API));
-        setIsPopupOpen(true)
-      });
   }, []);
 
   React.useEffect(() => {
-    if (!loggedIn) {
-      tokenCheck();
-    }
+    tokenCheck();
   }, [loggedIn]);
 
   React.useEffect(() => {
@@ -86,16 +76,22 @@ function App() {
   }, [moviesCount]);
 
   const handleClickBack = () => {
+    console.log(history.length);
     history.goBack();
   };
 
   const tokenCheck = () => {
-    mainApi.getUserInfo()
-      .then((result) => {
-        setCurrentUser(result);
+    Promise.all([mainApi.getUserInfo(), mainApi.getSavedMovies()])
+      .then((results) => {
+        const [user, apiMovies] = results;
+        setCurrentUser(user);
+        setSavedMovies(apiMovies);
         setLoggedIn(true);
+        history.push(location);
+        localStorage.setItem('saved', JSON.stringify(apiMovies));
       })
-      .catch(() => {
+      .catch((error) => {
+        setLoggedIn(false);
         history.push('/');
       });
   };
