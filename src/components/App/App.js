@@ -97,7 +97,7 @@ function App() {
         localStorage.setItem('user', JSON.stringify(user));
         setSavedMovies(apiMovies);
         setLoggedIn(true);
-        history.push(location);
+        history.push('/movies');
         localStorage.setItem('saved', JSON.stringify(apiMovies));
       })
       .catch((error) => {
@@ -109,11 +109,9 @@ function App() {
   const handleRegistration = (name, email, password) => {
     setIsSending(true);
     mainApi.registration(name, email, password)
-      .then((result) => {
+      .then(() => {
         setIsSuccess(true);
-        setCurrentUser(result);
-        history.push('/movies');
-        setLoggedIn(true);
+        handleLogin(email, password);
       })
       .catch((error) => {
         error.then((res) => setMessage(res.message));
