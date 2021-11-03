@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -37,7 +37,6 @@ function App() {
   const [addCount, setAddCount] = React.useState(0);
   const [isSending, setIsSending] = React.useState(false);
   const history = useHistory();
-  const location = useLocation();
 
   React.useEffect(() => {
 
