@@ -16,6 +16,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import './App.css';
 import { mainApi } from '../../utils/MainApi'
 import { movieApi } from '../../utils/MoviesApi'
+import { ERROR_MOVIE_API } from '../../utils/constants';
 
 
 function App() {
@@ -35,9 +36,18 @@ function App() {
   const history = useHistory();
   const location = useLocation();
 
-  const ERROR_MOVIE_API = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
+  React.useEffect(() => {
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setCurrentUser(user);
+      setMovies(JSON.parse(localStorage.getItem('movies')));
+      setSavedMovies(JSON.parse(localStorage.getItem('saved')));
+    }
+  }, []);
 
   React.useEffect(() => {
+    tokenCheck();
     movieApi.getMovies()
       .then((result) => {
         const modifiedMovies = result.map((movie) => {
@@ -62,17 +72,13 @@ function App() {
         error.then((res) => setMessage(ERROR_MOVIE_API));
         setIsPopupOpen(true)
       });
-  }, []);
-
-  React.useEffect(() => {
-    tokenCheck();
   }, [loggedIn]);
 
   React.useEffect(() => {
+    window.addEventListener('resize', getNumberOfMovies);
     setTimeout(() => {
-      window.addEventListener('resize', getNumberOfMovies);
+      window.removeEventListener('resize', getNumberOfMovies);
     }, 10);
-    window.removeEventListener('resize', getNumberOfMovies);
   }, [moviesCount]);
 
   const handleClickBack = () => {
@@ -85,6 +91,7 @@ function App() {
       .then((results) => {
         const [user, apiMovies] = results;
         setCurrentUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
         setSavedMovies(apiMovies);
         setLoggedIn(true);
         history.push(location);
@@ -117,7 +124,6 @@ function App() {
       .then((result) => {
         history.push('/movies');
         setLoggedIn(true);
-        setCurrentUser(result);
       })
       .catch((error) => {
         error.then((res) => setMessage(res.message));
@@ -130,6 +136,9 @@ function App() {
       .then(() => {
         setLoggedIn(false);
         history.push('/');
+        localStorage.removeItem('user');
+        localStorage.removeItem('saved');
+        localStorage.removeItem('movies');
       })
       .catch((error) => {
         error.then((res) => setMessage(res.message));
