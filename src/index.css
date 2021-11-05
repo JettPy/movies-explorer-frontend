@@ -10,6 +10,11 @@
 .link {
   text-decoration: none;
   color: #000;
+  transition: opacity 0.5s linear;
+}
+
+.link:hover {
+  opacity: 0.3;
 }
 
 .button {
@@ -19,6 +24,11 @@
   box-sizing: border-box;
   outline: none;
   cursor: pointer;
+  transition: opacity 0.5s linear;
+}
+
+.button:hover {
+  opacity: 0.6;
 }
 
 .link__logo {

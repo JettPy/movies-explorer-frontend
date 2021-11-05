@@ -21,7 +21,6 @@ function Profile({ onUpdateUser, onSignOut, isSending }) {
 
   React.useEffect(() => {
     setIsFormValid(isNameValid && isEmailValid && (name !== currentUser.name || email !== currentUser.email));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isNameValid, isEmailValid, name, email]);
 
   const handleInputName = (event) => {

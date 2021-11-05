@@ -8,20 +8,20 @@ function Portfolio() {
       <nav>
         <ul className="list">
           <li className="portfolio__element">
-            <p className="portfolio__discription">Статичный сайт</p>
             <a href="https://jettpy.github.io/how-to-learn/" target="_blank" className="portfolio__link link" rel="noreferrer">
+              <p className="portfolio__discription">Статичный сайт</p>
               <img src={icon} alt="Переход по ссылке" className="portfolio__icon"/>
             </a>
           </li>
           <li className="portfolio__element">
-            <p className="portfolio__discription">Адаптивный сайт</p>
             <a href="https://jettpy.github.io/russian-travel/" target="_blank" className="portfolio__link link" rel="noreferrer">
+              <p className="portfolio__discription">Адаптивный сайт</p>
               <img src={icon} alt="Переход по ссылке" className="portfolio__icon" />
             </a>
           </li>
           <li className="portfolio__element">
-            <p className="portfolio__discription">Одностраничное приложение</p>
             <a href="https://jettpy.github.io/mesto/" target="_blank" className="portfolio__link link" rel="noreferrer">
+              <p className="portfolio__discription">Одностраничное приложение</p>
               <img src={icon} alt="Переход по ссылке" className="portfolio__icon" />
             </a>
           </li>

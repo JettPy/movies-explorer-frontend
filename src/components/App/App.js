@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -16,12 +16,23 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import './App.css';
 import { mainApi } from '../../utils/MainApi'
 import { movieApi } from '../../utils/MoviesApi'
-import { ERROR_MOVIE_API } from '../../utils/constants';
+import {
+  ERROR_MOVIE_API,
+  SHORT_MOVIE,
+  LARGE_WIDTH,
+  MEDIUM_WIDTH,
+  LARGE_INIT_COUNT,
+  LARGE_ADD_COUNT,
+  MEDIUM_INIT_COUNT,
+  MEDIUM_ADD_COUNT,
+  SMALL_INIT_COUNT,
+  SMALL_ADD_COUNT,
+} from '../../utils/constants';
 
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
   const [message, setMessage] = React.useState('');
@@ -37,34 +48,46 @@ function App() {
   const [addCount, setAddCount] = React.useState(0);
   const [isSending, setIsSending] = React.useState(false);
   const history = useHistory();
+  const location = useLocation();
 
   React.useEffect(() => {
-
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      setCurrentUser(user);
-      setMovies(JSON.parse(localStorage.getItem('movies')));
-      setSavedMovies(JSON.parse(localStorage.getItem('saved')));
-    }
+    mainApi.getUserInfo()
+      .then(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+          setCurrentUser(user);
+          setMovies(JSON.parse(localStorage.getItem('movies')));
+          setSavedMovies(JSON.parse(localStorage.getItem('saved')));
+          setLoggedIn(true);
+          history.push(location);
+        }
+      })
+      .catch(() => {})
   }, []);
 
   React.useEffect(() => {
-    tokenCheck();
+    window.addEventListener('resize', getNumberOfMovies);
+    return () => {
+      window.removeEventListener('resize', getNumberOfMovies);
+    };
+  }, [moviesCount]);
+
+  const getBeatMovies = () => {
     movieApi.getMovies()
       .then((result) => {
         const modifiedMovies = result.map((movie) => {
           return {
-            country: movie.country,
-            director: movie.director,
-            duration: movie.duration,
-            year: movie.year,
-            description: movie.description,
+            country: movie.country ? movie.country : 'None',
+            director: movie.director ? movie.director : 'None',
+            duration: movie.duration ? movie.duration : 0,
+            year: movie.year ? movie.year : 'None',
+            description: movie.description ? movie.description : 'None',
             image: 'https://api.nomoreparties.co' + movie.image.url,
-            trailer: movie.trailerLink,
+            trailer: movie.trailerLink ? movie.trailerLink : 'None',
             thumbnail: 'https://api.nomoreparties.co' + movie.image.formats.thumbnail.url,
             movieId: movie.id,
-            nameRU: movie.nameRU,
-            nameEN: movie.nameEN
+            nameRU: movie.nameRU ? movie.nameRU : 'None',
+            nameEN: movie.nameEN ? movie.nameEN : 'None'
           }
         });
         setMovies(modifiedMovies);
@@ -74,42 +97,12 @@ function App() {
         error.then((res) => setMessage(ERROR_MOVIE_API));
         setIsPopupOpen(true)
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedIn]);
-
-  React.useEffect(() => {
-    window.addEventListener('resize', getNumberOfMovies);
-    setTimeout(() => {
-      window.removeEventListener('resize', getNumberOfMovies);
-    }, 10);
-  }, [moviesCount]);
-
-  const handleClickBack = () => {
-    history.goBack();
-  };
-
-  const tokenCheck = () => {
-    Promise.all([mainApi.getUserInfo(), mainApi.getSavedMovies()])
-      .then((results) => {
-        const [user, apiMovies] = results;
-        setCurrentUser(user);
-        localStorage.setItem('user', JSON.stringify(user));
-        setSavedMovies(apiMovies);
-        setLoggedIn(true);
-        history.push('/movies');
-        localStorage.setItem('saved', JSON.stringify(apiMovies));
-      })
-      .catch((error) => {
-        setLoggedIn(false);
-        history.push('/');
-      });
   };
 
   const handleRegistration = (name, email, password) => {
     setIsSending(true);
     mainApi.registration(name, email, password)
-      .then(() => {
-        setIsSuccess(true);
+      .then((result) => {
         handleLogin(email, password);
       })
       .catch((error) => {
@@ -125,12 +118,25 @@ function App() {
     setIsSending(false);
     mainApi.authorize(email, password)
       .then((result) => {
-        history.push('/movies');
+        mainApi.getUserInfo()
+          .then((result) => {
+            setCurrentUser(result);
+            localStorage.setItem('user', JSON.stringify(result));
+          });
+        mainApi.getSavedMovies()
+          .then((result) => {
+            setSavedMovies(result);
+            localStorage.setItem('saved', JSON.stringify(result));
+          });
+        getBeatMovies();
         setLoggedIn(true);
+        history.push('/movies');
       })
       .catch((error) => {
-        error.then((res) => setMessage(res.message));
-        setIsPopupOpen(true)
+        error.then((res) => {
+          setMessage(res.message);
+          setIsPopupOpen(true)
+        })
       })
       .finally(() => {
         setIsSending(false);
@@ -145,10 +151,19 @@ function App() {
         localStorage.removeItem('user');
         localStorage.removeItem('saved');
         localStorage.removeItem('movies');
+        setMovies([]);
+        setSearchedMovies([]);
+        setSavedMovies([]);
+        setSearchedSavedMovies([]);
+        setCurrentUser({});
+        setIsSearched(false);
+        setIsSavedSearched(false);
       })
       .catch((error) => {
-        error.then((res) => setMessage(res.message));
-        setIsPopupOpen(true)
+        error.then((res) => {
+          setMessage(res.message);
+          setIsPopupOpen(true)
+        })
       });
   };
 
@@ -196,7 +211,7 @@ function App() {
           if (movie.nameEN) {
             eng = movie.nameEN.toLowerCase();
           }
-          return (rus.includes(searchedMovie) || eng.includes(searchedMovie)) && (!isShort || duration <= 40);
+          return (rus.includes(searchedMovie) || eng.includes(searchedMovie)) && (!isShort || duration <= SHORT_MOVIE);
         });
         setSearchedSavedMovies(foundMovies);
       } else {
@@ -208,7 +223,7 @@ function App() {
           if (movie.nameEN) {
             eng = movie.nameEN.toLowerCase();
           }
-          return (rus.includes(searchedMovie) || eng.includes(searchedMovie)) && (!isShort || duration <= 40);
+          return (rus.includes(searchedMovie) || eng.includes(searchedMovie)) && (!isShort || duration <= SHORT_MOVIE);
         });
         setSearchedMovies(foundMovies);
       }
@@ -224,12 +239,12 @@ function App() {
       let foundMovies = null;
       if (isSaved) {
         foundMovies = savedMovies.filter((movie) => {
-          return isShort || movie.duration <= 40;
+          return isShort || movie.duration <= SHORT_MOVIE;
         });
         setSearchedSavedMovies(foundMovies);
       } else {
         foundMovies = movies.filter((movie) => {
-          return isShort || movie.duration <= 40;
+          return isShort || movie.duration <= SHORT_MOVIE;
         });
         setSearchedMovies(foundMovies);
       }
@@ -240,15 +255,15 @@ function App() {
 
   const getNumberOfMovies = () => {
     const width = window.screen.availWidth;
-    if (width >= 1280) {
-      setMoviesCount(12);
-      setAddCount(3);
-    } else if (width >= 768) {
-      setMoviesCount(8);
-      setAddCount(2);
+    if (width >= LARGE_WIDTH) {
+      setMoviesCount(LARGE_INIT_COUNT);
+      setAddCount(LARGE_ADD_COUNT);
+    } else if (width >= MEDIUM_WIDTH) {
+      setMoviesCount(MEDIUM_INIT_COUNT);
+      setAddCount(MEDIUM_ADD_COUNT);
     } else {
-      setMoviesCount(5);
-      setAddCount(2);
+      setMoviesCount(SMALL_INIT_COUNT);
+      setAddCount(SMALL_ADD_COUNT);
     }
   };
 
@@ -283,20 +298,20 @@ function App() {
   };
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={currentUser} >
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/" >
           <Header loggedIn={loggedIn} />
           <Main />
           <Footer />
         </Route>
-        <Route path="/signup">
+        <ProtectedRoute loggedIn={!loggedIn} path="/signup" redirect="/profile" >
           <Register onRegister={handleRegistration} isSending={isSending} />
-        </Route>
-        <Route path="/signin">
+        </ProtectedRoute>
+        <ProtectedRoute loggedIn={!loggedIn} path="/signin" redirect="/profile" >
           <Login onLogin={handleLogin} isSending={isSending} />
-        </Route>
-        <ProtectedRoute loggedIn={loggedIn} path="/movies">
+        </ProtectedRoute>
+        <ProtectedRoute loggedIn={loggedIn} path="/movies" redirect="/" >
           <Header loggedIn={loggedIn} />
           <Movies
             isSearching={isSearching}
@@ -313,7 +328,7 @@ function App() {
           />
           <Footer />
         </ProtectedRoute>
-        <ProtectedRoute loggedIn={loggedIn} path="/saved-movies">
+        <ProtectedRoute loggedIn={loggedIn} path="/saved-movies" redirect="/" >
           <Header loggedIn={loggedIn} />
           <SavedMovies
             isSearching={isSearching}
@@ -330,12 +345,12 @@ function App() {
           />
           <Footer />
         </ProtectedRoute>
-        <ProtectedRoute loggedIn={loggedIn} path="/profile">
+        <ProtectedRoute loggedIn={loggedIn} path="/profile" redirect="/" >
           <Header loggedIn={loggedIn} />
           <Profile onUpdateUser={handleUpdateUser} onSignOut={handleSignOut} isSending={isSending} />
         </ProtectedRoute>
-        <Route path="*">
-          <PageNotFound goBack={handleClickBack} />
+        <Route path="*" >
+          <PageNotFound history={history} />
         </Route>
       </Switch>
       <Popup
