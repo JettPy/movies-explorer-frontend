@@ -44,5 +44,5 @@ Movies Explorer - это сервис, в котором можно найти �
 
 ### **Ссылки на проект**
 
-Публичный IP: 84.201.135.142
+Публичный IP: 84.201.135.142  
 [https://susliksmovies.nomoredomains.monster](https://susliksmovies.nomoredomains.monster)

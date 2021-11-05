@@ -1,6 +1,6 @@
 import React from 'react';
 import avatar from '../../images/default.png';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import './Navigation.css';
 
 function Navigation() {
@@ -32,23 +32,23 @@ function Navigation() {
         </Link>
       </div>
       <button className="navigation__button button" onClick={onOpenMenu}></button>
-      <div className={`navigation__overlay${isMenuOpen ? ' navigation__overlay_opened' : ''}`}>
+      <div className={`overlay navigation__overlay${isMenuOpen ? ' overlay_opened' : ''}`}>
         <div className={`navigation__menu${isMenuOpen ? ' navigation__menu_opened' : ''}`}>
           <ul className="navigation__menu-list list">
             <li className="navigation__menu-element">
-              <Link to="/" className="navigation__link link" onClick={onClose}>Главная</Link>
+              <NavLink exact to="/" className="navigation__link link" activeClassName="navigation__link_active" onClick={onClose}>Главная</NavLink>
             </li>
             <li className="navigation__menu-element">
-              <Link to="/movies" className="navigation__link link" onClick={onClose}>Фильмы</Link>
+              <NavLink to="/movies" className="navigation__link link" activeClassName="navigation__link_active" onClick={onClose}>Фильмы</NavLink>
             </li>
             <li className="navigation__menu-element">
-              <Link to="/saved-movies" className="navigation__link link" onClick={onClose}>Сохранённые фильмы</Link>
+              <NavLink to="/saved-movies" className="navigation__link link" activeClassName="navigation__link_active" onClick={onClose}>Сохранённые фильмы</NavLink>
             </li>
           </ul>
-          <Link to="/profile" className="navigation__profile link" onClick={onClose}>
+          <NavLink to="/profile" className="navigation__profile link" activeClassName="navigation__link_active" onClick={onClose}>
             Аккаунт
             <img src={avatar} alt="Аватар" className="navigation__avatar" />
-          </Link>
+          </NavLink>
           <button className="navigation__close button" aria-label="Закрыть" type="button" onClick={onClose}></button>
         </div>
       </div>

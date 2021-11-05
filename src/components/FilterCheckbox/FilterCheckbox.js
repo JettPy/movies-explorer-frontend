@@ -1,15 +1,21 @@
 import './FilterCheckbox.css';
 
-function FilterCheckbox() {
+function FilterCheckbox({ isShort, setIsShort, isSaved, filterMovies, isSending }) {
 
   const handleInputCheckbox = (event) => {
-    console.log(event.target.value);
+    setIsShort(!isShort);
+    filterMovies(isShort, isSaved);
   }
 
   return (
     <div className="filter-checkbox">
       <label className="filter-checkbox__label">
-        <input className="filter-checkbox__input" type="checkbox" name="short-films" onChange={handleInputCheckbox}/>
+        <input
+          className="filter-checkbox__input"
+          type="checkbox" name="short-films"
+          onChange={handleInputCheckbox}
+          disabled={isSending}
+        />
         <span className="filter-checkbox__pseudo-checkbox">
           <span className="filter-checkbox__tumbler"></span>
         </span>

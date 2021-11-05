@@ -10,6 +10,11 @@
 .link {
   text-decoration: none;
   color: #000;
+  transition: opacity 0.5s linear;
+}
+
+.link:hover {
+  opacity: 0.3;
 }
 
 .button {
@@ -19,6 +24,11 @@
   box-sizing: border-box;
   outline: none;
   cursor: pointer;
+  transition: opacity 0.5s linear;
+}
+
+.button:hover {
+  opacity: 0.6;
 }
 
 .link__logo {
@@ -139,6 +149,25 @@
   line-height: 17px;
   text-align: center;
   color: #A0A0A0;
+}
+
+.overlay {
+  display: flex;
+  position: fixed;
+  visibility: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  z-index: 1;
+  transition: visibility 0.3s, opacity 0.3s linear;
+}
+
+.overlay_opened {
+  visibility: visible;
+  opacity: 1;
 }
 
 @media screen and (max-width: 800px) {

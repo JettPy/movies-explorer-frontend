@@ -1,21 +1,22 @@
 import React from "react";
 import logo from '../../images/logo.svg';
 import { Link } from "react-router-dom";
-import './Login.css';
 
-function Login() {
+function Login({ onLogin, isSending }) {
 
   const [email, setEmail] = React.useState('');
-  const [isEmailValid, setIsEmailValid] = React.useState(false);
+  const [isEmailValid, setIsEmailValid] = React.useState(true);
   const [emailValidationMessage, setEmailValidationMessage] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [isPasswordValid, setIsPasswordValid] = React.useState(false);
+  const [isPasswordValid, setIsPasswordValid] = React.useState(true);
   const [passwordValidationMessage, setPasswordValidationMessage] = React.useState('');
   const [isFormValid, setIsFormValid] = React.useState(false);
 
   React.useEffect(() => {
-    setIsFormValid(isEmailValid && isPasswordValid);
-  }, [isEmailValid, isPasswordValid]);
+    setIsFormValid(isEmailValid && isPasswordValid &&
+      email.length > 0 && password.length > 0);
+  }, [isEmailValid, isPasswordValid, email.length, password.length]);
+
 
   const handleInputEmail = (event) => {
     setEmail(event.target.value);
@@ -29,9 +30,9 @@ function Login() {
     setPasswordValidationMessage(event.target.validationMessage);
   }
 
-  const submit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Отправлено!');
+    onLogin(email, password);
   };
 
   return (
@@ -40,7 +41,7 @@ function Login() {
         <img src={logo} alt="Логотип" className="auth__logo" />
       </Link>
       <h1 className="auth__title">Рады видеть!</h1>
-      <form className="auth__form" name="login" onSubmit={submit}>
+      <form className="auth__form" name="login" onSubmit={handleSubmit}>
         <fieldset className="auth__set">
           <label className="auth__label" htmlFor="email-input">E&#8209;mail</label>
           <input
@@ -51,6 +52,7 @@ function Login() {
             id="email-input"
             onChange={handleInputEmail}
             required
+            disabled={isSending}
           />
           <span className="error__span">{emailValidationMessage}</span>
           <label className="auth__label" htmlFor="password-input">Пароль</label>
@@ -62,9 +64,10 @@ function Login() {
             onChange={handleInputPassword}
             minLength="8"
             required
+            disabled={isSending}
           />
           <span className="error__span">{passwordValidationMessage}</span>
-          <button className={`auth__button button${!isFormValid ? ' error_button' : ''}`} type="submit" disabled={!isFormValid}>Войти</button>
+          <button className={`auth__button button${!isFormValid ? ' error_button' : ''}`} type="submit" disabled={!isFormValid || isSending} >Войти</button>
         </fieldset>
       </form>
       <p className="auth__caption">

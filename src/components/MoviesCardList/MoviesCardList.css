@@ -13,6 +13,18 @@
   justify-content: center;
 }
 
+.card-list__warning {
+  margin: 0;
+  text-align: center;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.card-list__warning_diabled {
+  display: none;
+}
+
 .card-list__more {
   margin: 50px auto 0;
   width: 320px;
