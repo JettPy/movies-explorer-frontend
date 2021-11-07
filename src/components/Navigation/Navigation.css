@@ -46,6 +46,19 @@
   display: none;
 }
 
+.navigation__container {
+  display: flex;
+  flex-direction: row-reverse;
+  visibility: hidden;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: visibility 1s linear;
+}
+
 .navigation__menu {
     display: none;
 }
@@ -69,8 +82,8 @@
     background-repeat: no-repeat;
   }
 
-  .navigation__overlay {
-    flex-direction: row-reverse;
+  .navigation__container_opened {
+    visibility: visible;
   }
 
   .navigation__menu {
@@ -82,7 +95,7 @@
     align-items: center;
     background-color: #FFF;
     transform: translateX(100%);
-    transition: transform 0.3s linear;
+    transition: transform 0.4s linear;
   }
 
   .navigation__menu_opened {

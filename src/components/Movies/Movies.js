@@ -1,19 +1,20 @@
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import './Movies.css';
 
-function Movies({ isSearching, movies, savedMovies, onSearch, moviesCount, onClick, onLike, onDelete, filterMovies, isSending, isSearched }) {
+function Movies({ isSearching, movies, savedMovies, onSearch, isSaved, moviesCount, onClick, onLike, onDelete, filterMovies, isSending, isSearched }) {
 
   return (
-    <main>
-      <SearchForm onSearch={onSearch} isSaved={false} filterMovies={filterMovies} isSending={isSending} />
+    <main className="main">
+      <SearchForm onSearch={onSearch} isSaved={isSaved} filterMovies={filterMovies} isSending={isSending} />
       {isSearching ? (
         <Preloader />
       ) : (
           <MoviesCardList
             movies={movies}
             savedMovies={savedMovies}
-            isSaved={false}
+            isSaved={isSaved}
             moviesCount={moviesCount}
             onClick={onClick}
             onLike={onLike}
