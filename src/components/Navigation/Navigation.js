@@ -32,7 +32,8 @@ function Navigation() {
         </Link>
       </div>
       <button className="navigation__button button" onClick={onOpenMenu}></button>
-      <div className={`overlay navigation__overlay${isMenuOpen ? ' overlay_opened' : ''}`}>
+      <div className={`navigation__container${isMenuOpen ? ' navigation__container_opened' : ''}`}>
+        <div className={`overlay${isMenuOpen ? ' overlay_opened' : ''}`}></div>
         <div className={`navigation__menu${isMenuOpen ? ' navigation__menu_opened' : ''}`}>
           <ul className="navigation__menu-list list">
             <li className="navigation__menu-element">

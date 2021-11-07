@@ -56,7 +56,7 @@
 }
 
 .auth {
-  margin: 0 auto;
+  margin: 0 auto 70px;
   padding-top: 70px;
   max-width: 396px;
   width: 100%;
@@ -161,8 +161,7 @@
   right: 0;
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
-  z-index: 1;
-  transition: visibility 0.3s, opacity 0.3s linear;
+  transition: visibility 0.4s, opacity 0.4s linear;
 }
 
 .overlay_opened {
@@ -181,7 +180,6 @@
 @media screen and (max-width: 420px) {
 
   .auth {
-    margin: 0 auto;
     padding-top: 50px;
     display: flex;
     flex-direction: column;

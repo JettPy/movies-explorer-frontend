@@ -7,7 +7,6 @@ import Main from '../Main/Main';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Movies from '../Movies/Movies';
-import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Footer from '../Footer/Footer';
@@ -18,6 +17,7 @@ import { mainApi } from '../../utils/MainApi'
 import { movieApi } from '../../utils/MoviesApi'
 import {
   ERROR_MOVIE_API,
+  ROUTES,
   SHORT_MOVIE,
   LARGE_WIDTH,
   MEDIUM_WIDTH,
@@ -59,7 +59,9 @@ function App() {
           setMovies(JSON.parse(localStorage.getItem('movies')));
           setSavedMovies(JSON.parse(localStorage.getItem('saved')));
           setLoggedIn(true);
-          history.push(location);
+          if (ROUTES.some(route => route === location.pathname)) {
+            history.push(location);
+          }
         }
       })
       .catch(() => {})
@@ -317,6 +319,7 @@ function App() {
             isSearching={isSearching}
             movies={searchedMovies}
             savedMovies={savedMovies}
+            isSaved={false}
             onSearch={handleSearch}
             moviesCount={moviesCount}
             onClick={handleMoreClick}
@@ -330,10 +333,11 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute loggedIn={loggedIn} path="/saved-movies" redirect="/" >
           <Header loggedIn={loggedIn} />
-          <SavedMovies
+          <Movies
             isSearching={isSearching}
             movies={searchedSavedMovies}
             savedMovies={savedMovies}
+            isSaved={true}
             onSearch={handleSearch}
             moviesCount={moviesCount}
             onClick={handleMoreClick}
