@@ -1,5 +1,14 @@
 export const ERROR_MOVIE_API = 'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
 
+export const ROUTES = [
+  '/',
+  '/movies',
+  '/saved-movies',
+  '/profile',
+  '/signup',
+  '/signin'
+]
+
 export const SHORT_MOVIE = 40;
 
 export const LARGE_WIDTH = 1280;

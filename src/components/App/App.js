@@ -18,6 +18,7 @@ import { mainApi } from '../../utils/MainApi'
 import { movieApi } from '../../utils/MoviesApi'
 import {
   ERROR_MOVIE_API,
+  ROUTES,
   SHORT_MOVIE,
   LARGE_WIDTH,
   MEDIUM_WIDTH,
@@ -59,7 +60,9 @@ function App() {
           setMovies(JSON.parse(localStorage.getItem('movies')));
           setSavedMovies(JSON.parse(localStorage.getItem('saved')));
           setLoggedIn(true);
-          history.push(location);
+          if (ROUTES.some(route => route === location.pathname)) {
+            history.push(location);
+          }
         }
       })
       .catch(() => {})
